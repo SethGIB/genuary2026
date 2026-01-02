@@ -2,17 +2,11 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
+#include "ArcSystemWorks.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
-
-struct ArcLite {
-
-};
-
-class ArcSystem {
-};
 
 class genuary202602App : public App {
 public:
@@ -20,4 +14,8 @@ public:
 	void mouseDown(MouseEvent event) override;
 	void update() override;
 	void draw() override;
+
+private:
+	bool mIsRunning = false;
+	ArcSystem mArcSystem;
 };

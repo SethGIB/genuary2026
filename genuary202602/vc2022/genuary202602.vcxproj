@@ -103,9 +103,11 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>
+    <ClCompile Include="..\src\ArcSystemWorks.cpp" />
     <ClCompile Include="..\src\genuary202602App.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ArcSystemWorks.h" />
     <ClInclude Include="..\include\genuary202602App.h" />
     <ClInclude Include="..\include\Resources.h" />
   </ItemGroup>
