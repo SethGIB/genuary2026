@@ -32,8 +32,12 @@ void ffEmitter::step()
 		{
 			mParticles[i].mPos += 0.025f * mParticles[i].mVel;
 		}
+		mColor.a = glm::clamp<float>(static_cast<float>(mAge) / 15.0f, 0.0f, 1.0f);
 	}
-	mColor.a = glm::clamp<float>(static_cast<float>(mAge) / 15.0f, 0.0f, 1.0f);
+	else
+	{
+		mAlive = false;
+	}
 }
 
 void ffEmitter::show()

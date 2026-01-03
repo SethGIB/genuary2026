@@ -19,6 +19,7 @@ public:
 	int mAge = 15;
 	vec4 mColor;
 	vec3 mOrigin;
+	bool mAlive = true;
 
 	ffEmitter();
 	ffEmitter(int ffCount, vec4 ffColor, vec3 ffOrigin);

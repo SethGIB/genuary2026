@@ -30,7 +30,7 @@ private:
 	const float kYStep = 0.08f;
 
 	const vec4 kBlue = vec4(38.0f / 255.0f, 104.0f / 255.0f, 120.0f / 255.0f, 0.9f);
-	const vec4 kGreen = vec4(42.0f / 255.0f, 120.0f / 255.0f, 38.0f / 255.0f, 1.0f);
+	const vec4 kGreen = vec4(42.0f / 255.0f, 120.0f / 255.0f, 38.0f / 255.0f, 0.2f);
 	const vec4 kBrown = vec4(94.0f / 255.0f, 74.0f / 255.0f, 34.0f / 255.0f, 1.0f);
 	const vec4 kSky = vec4(64.0f/255.0f, 107.0f / 255.0f, 210.0f / 255.0f, 1.0f);
 	const vec4 kSnow = vec4(0.9f, 0.9f, 1.0f, 0.85f);

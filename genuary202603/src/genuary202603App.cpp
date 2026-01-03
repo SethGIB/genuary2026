@@ -10,7 +10,46 @@ void genuary202603App::setup()
 	updateTerrain(0.0f);
 	setupFireworks();
 	setup3DObjects();
+	gl::enableAlphaBlending();
+}
 
+void genuary202603App::update()
+{
+	float t = getElapsedSeconds() * 2.2f;
+	updateTerrain(t);
+	updateFireworks();
+
+	void* bufferPtr = mTerrainBuffer->mapReplace();
+	memcpy(bufferPtr, mTerrainData.data(), mTerrainData.size() * sizeof(mPoint));
+	mTerrainBuffer->unmap();
+
+	bufferPtr = mFireworksBuffer->mapReplace();
+	memcpy(bufferPtr, mFireworksData.data(), mFireworksData.size() * sizeof(mPoint));
+	mFireworksBuffer->unmap();
+}
+
+void genuary202603App::draw()
+{
+
+	gl::clear(Color(0.0f, 0.0f, 0.0f));
+	gl::pushMatrices();
+	gl::disableDepthRead();
+	gl::disableDepthWrite();
+	gl::setMatricesWindow(getWindowSize());
+	gl::draw(mTexBG, getWindowBounds());
+	gl::popMatrices();
+
+	gl::pushMatrices();
+	gl::setMatrices(mCamera);
+	gl::enableDepthRead();
+	gl::enableDepthWrite();
+	gl::pointSize(8.0f);
+	mTerrainBatch->draw();
+
+	gl::pointSize(4.0f);
+	mFireworksBatch->draw();
+
+	gl::popMatrices();
 }
 
 void genuary202603App::setupCamera()
@@ -57,16 +96,16 @@ void genuary202603App::updateTerrain( float gOffset )
 		{
 			float x0 = (x - kNumCols / 2) * kXScale;
 			float y0 = lmap<float>(Perlin().noise(xOffset, yOffset), -0.5f, .5f, kNoiseMin, kNoiseMax);
-			y0 = glm::clamp<float>(y0, 0.04f, kNoiseMax);
+			y0 = glm::clamp<float>(y0, 0.07f, kNoiseMax);
 			float z0 = (y - kNumRows / 2) * kYScale;
 			vec3 position = vec3(x0, y0, z0);
 	
 			vec4 color = kSnow;
-			if (y0 < 0.20f && y0 > 0.11f)
+			if (y0 < 0.20f && y0 > 0.125f)
 				color = kBrown;
-			else if (y0 < 0.11f && y0 > 0.05f)
+			else if (y0 <= 0.125f && y0 > 0.071f)
 				color = kGreen;
-			else if (y0 < 0.05f)
+			else if (y0 <= 0.07f)
 				color = kBlue;
 
 			mTerrainData.push_back({ position, color });
@@ -96,6 +135,15 @@ void genuary202603App::updateFireworks()
 	mFireworksData.clear();
 	for( int f=0;f < mFireworksEmitters.size(); f++ )
 	{
+		if(mFireworksEmitters[f].mAlive == false)
+		{
+			float ffx = Rand::randFloat(-0.3f, 0.3f);
+			float ffy = Rand::randFloat(0.4f, 1.2f);
+			vec4 color = vec4(Rand::randFloat(0.5f, 1.0f), Rand::randFloat(0.5f, 1.0f), Rand::randFloat(0.5f, 1.0f), 1.0f);
+			ffEmitter emitter = ffEmitter(6, color, vec3(ffx, ffy, 0.0f));
+			mFireworksEmitters[f] = emitter;
+		}
+
 		mFireworksEmitters[f].step();
 		for( int p=0; p < mFireworksEmitters[f].mParticles.size(); p++ )
 		{
@@ -104,47 +152,6 @@ void genuary202603App::updateFireworks()
 			mFireworksData.push_back({ position, color });
 		}
 	}	
-}
-
-void genuary202603App::update()
-{
-	float t = getElapsedSeconds() * 2.2f;
-	updateTerrain( t );
-	updateFireworks();
-
-	void* bufferPtr = mTerrainBuffer->mapReplace();
-	memcpy(bufferPtr, mTerrainData.data(), mTerrainData.size() * sizeof(mPoint));
-	mTerrainBuffer->unmap();
-
-	bufferPtr = mFireworksBuffer->mapReplace();
-	memcpy(bufferPtr, mFireworksData.data(), mFireworksData.size() * sizeof(mPoint));
-	mFireworksBuffer->unmap();
-}
-
-void genuary202603App::draw()
-{
-
-	gl::clear( Color( 0.0f,0.0f,0.0f ) ); 
-	gl::pushMatrices();
-	gl::disableDepthRead();
-	gl::disableDepthWrite();
-	gl::setMatricesWindow(getWindowSize());
-	gl::draw(mTexBG, getWindowBounds());
-	gl::popMatrices();
-
-	gl::pushMatrices();
-	gl::setMatrices(mCamera);
-	gl::enableDepthRead();
-	gl::enableDepthWrite();
-	gl::pointSize(2.0f);
-	mTerrainBatch->draw();
-
-	gl::pointSize(8.0f);
-	gl::enableAlphaBlending();
-	mFireworksBatch->draw();
-
-	gl::popMatrices();
-
 }
 
 void prepareSettings( App::Settings* settings )
