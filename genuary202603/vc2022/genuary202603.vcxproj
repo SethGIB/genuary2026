@@ -101,15 +101,12 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup />
   <ItemGroup>
     <ClCompile Include="..\src\ffEmitter.cpp" />
-    <ClCompile Include="..\src\ffTerrain.cpp" />
     <ClCompile Include="..\src\genuary202603App.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ffEmitter.h" />
-    <ClInclude Include="..\include\ffTerrain.h" />
     <ClInclude Include="..\include\genuary202603App.h" />
     <ClInclude Include="..\include\Resources.h" />
   </ItemGroup>

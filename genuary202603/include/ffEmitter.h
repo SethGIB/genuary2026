@@ -7,11 +7,8 @@ using namespace std;
 struct ffParticle
 {
 public:
-	vec2 mPos;
-	vec2 mVel;
-
-	ffParticle() : mPos(vec2(0.0f)), mVel(vec2(0.0f)) {}
-	ffParticle(vec2 pos, vec2 vel) : mPos(pos), mVel(vel) {}
+	vec3 mPos;
+	vec3 mVel;
 };
 
 class ffEmitter
@@ -19,11 +16,12 @@ class ffEmitter
 public:
 	vector<ffParticle> mParticles;
 	int mCount;
-	ColorA mColor;
-	vec2 mOrigin;
+	int mAge = 15;
+	vec4 mColor;
+	vec3 mOrigin;
 
 	ffEmitter();
-	ffEmitter(int ffCount, ColorA ffColor);
+	ffEmitter(int ffCount, vec4 ffColor, vec3 ffOrigin);
 	void step();
 	void show();
 };

@@ -25,21 +25,21 @@ void draw()
     float cOff = 0;
     for(int col=0;col<G_COLS;col++)
     {
-      G_Z_VALS[col][row] = map(noise(cOff,rOff),0.0f,1.0f,-200,200); 
+      G_Z_VALS[col][row] = constrain(map(noise(cOff,rOff),0.0f,1.0f,-200,200),-81,200); 
       cOff+=0.05;      
     }
     rOff+=0.02;    
   }
   
   background(64, 107, 210);
-  stroke(0);
+  stroke(16, 24, 56);
   pushMatrix();
   translate(width/2,height/2);
   rotateX(PI*0.43);
   translate(-G_W/2,-G_H/2);
   for(int row=0;row<G_ROWS-1;row++)
   {
-    beginShape(TRIANGLE_STRIP);
+    beginShape(POINTS);
     strokeWeight(1);
     for(int col=0;col<G_COLS;col++)
     {
