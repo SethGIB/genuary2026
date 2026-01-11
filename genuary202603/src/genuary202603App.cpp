@@ -46,8 +46,8 @@ void genuary202603App::draw()
 	gl::pointSize(8.0f);
 	mTerrainBatch->draw();
 
-	gl::pointSize(4.0f);
-	mFireworksBatch->draw();
+	//gl::pointSize(4.0f);
+	//mFireworksBatch->draw();
 
 	gl::popMatrices();
 }
